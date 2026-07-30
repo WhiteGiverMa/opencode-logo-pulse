@@ -1,0 +1,13 @@
+node_modules/
+.codegraph
+.omo/
+.agents/
+docs/prd/
+.debug-journal.md
+.env
+.env.*
+!.env.example
+*.log
+*:Zone.Identifier
+*.tsbuildinfo
+.DS_Store

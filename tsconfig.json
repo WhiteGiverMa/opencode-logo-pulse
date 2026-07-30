@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "strict": true,
+    "noEmit": true,
+    "types": ["bun"],
+    "jsx": "preserve",
+    "jsxImportSource": "@opentui/solid",
+    "skipLibCheck": true
+  },
+  "include": ["plugin/**/*.ts", "plugin/**/*.tsx", "test/**/*.ts", "test/**/*.tsx"]
+}
