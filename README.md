@@ -1,8 +1,14 @@
 # OpenCode Logo Pulse
 
-An interactive, theme-aware replacement for the OpenCode home logo. Hold a solid logo cell to gather energy, then release to send a pulse across the wordmark.
+Revives the official interactive home-logo easter egg that shipped in earlier OpenCode versions and was removed from later releases. Hold a solid logo cell to gather energy, then release to send a pulse across the wordmark.
 
 The static state preserves OpenCode's native four-row geometry. Animation and sound remain dormant until interaction, and sound is disabled by default.
+
+## Background
+
+Earlier OpenCode releases hid a surprisingly elaborate interaction inside the home logo: pointer-driven charging, a release wave, combo escalation, and synchronized sound effects. The easter egg disappeared as the TUI evolved.
+
+OpenCode Logo Pulse brings that official easter egg back as a local TUI plugin. It preserves the current native logo at rest, adapts the restored effect to the active theme, and adds explicit configuration and lifecycle cleanup so it can live safely outside the OpenCode core.
 
 ## Experience
 
