@@ -1,34 +1,36 @@
 # OpenCode Logo Pulse
 
-Revives the official interactive home-logo easter egg that shipped in earlier OpenCode versions and was removed from later releases. Hold a solid logo cell to gather energy, then release to send a pulse across the wordmark.
+[English](README.en.md) | **简体中文**
 
-The static state preserves OpenCode's native four-row geometry. Animation and sound remain dormant until interaction, and sound is disabled by default.
+复活早期 OpenCode 版本自带、后来被移除的主页 logo 交互彩蛋。按住一个实心的 logo 格子蓄力，松手把脉冲送进整个字标。
 
-## Background
+静止状态完整保留 OpenCode 原生的四行几何；动画与音效在交互之前保持休眠，且声音默认关闭。
 
-Earlier OpenCode releases hid a surprisingly elaborate interaction inside the home logo: pointer-driven charging, a release wave, combo escalation, and synchronized sound effects. The easter egg disappeared as the TUI evolved.
+## 背景
 
-OpenCode Logo Pulse brings that official easter egg back as a local TUI plugin. It preserves the current native logo at rest, adapts the restored effect to the active theme, and adds explicit configuration and lifecycle cleanup so it can live safely outside the OpenCode core.
+早期 OpenCode 在主页 logo 里藏了一个出乎意料地精致的交互：指针驱动蓄力、松手激起波浪、连击升级，还有同步音效。随着 TUI 演进，这个彩蛋消失了。
 
-## Experience
+OpenCode Logo Pulse 把这个官方彩蛋以本地 TUI 插件的形式带了回来：静止时保留当前原生 logo，效果适配当前主题，并提供显式配置与生命周期清理，让它能安全地活在 OpenCode 核心之外。
 
-- **Press and hold:** after a short accidental-click guard, energy gathers beneath the pointer and traces the selected glyph.
-- **Release:** the charge becomes a theme-colored wave with a short glyph afterglow.
-- **Full charge:** holding for `charge_ms` triggers the burst automatically; releasing afterward does not trigger twice.
-- **Drag away:** leaving the logo releases immediately and reliably stops the charge sound.
-- **Rapid bursts:** interactions within 1.5 seconds build a three-level combo that increases force and propagation speed.
-- **Theme native:** static ink, energy, highlights, and shadows derive from the active OpenCode theme.
-- **Idle friendly:** with `idle: false`, no frame timer runs until the logo is used.
+## 体验
 
-Only left-button interaction on a visible logo cell is active. Blank cells and other mouse buttons remain inert, and no keyboard command or navigation is hidden behind the effect.
+- **按住：** 经过短暂的防误触判定后，能量在指针下汇聚，描过选中的字形。
+- **松手：** 蓄力化作一道主题色的波浪，字形留下短暂的余辉。
+- **满蓄：** 按住满 `charge_ms` 自动触发爆发；之后再松手不会重复触发。
+- **拖出：** 离开 logo 立即释放，并可靠地停止蓄力音效。
+- **快速连发：** 1.5 秒内的连续交互会叠出三级连击，提升力度与传播速度。
+- **主题原生：** 静态墨色、能量、高光与阴影都取自当前 OpenCode 主题。
+- **闲时友好：** `idle: false` 时，logo 不被使用就不跑任何帧计时器。
 
-## Requirements
+只有左键点在可见的 logo 格子上才生效；空白格与其他按键保持惰性，也没有任何键盘命令或导航藏在这个效果后面。
 
-- OpenCode with the TUI plugin API. Tested with OpenCode 1.18.9.
-- [Bun](https://bun.sh/) for installation, checks, and deployment.
-- Optional sound playback requires one supported local player, such as `ffplay`, `mpv`, `play`, `afplay`, or `aplay`.
+## 环境要求
 
-## Install
+- 带 TUI 插件 API 的 OpenCode，已在 OpenCode 1.18.9 上测试。
+- [Bun](https://bun.sh/)，用于安装、检查与部署。
+- 可选的声音播放需要一个本地播放器：`ffplay`、`mpv`、`play`、`afplay` 或 `aplay` 之一。
+
+## 安装
 
 ```bash
 git clone https://github.com/WhiteGiverMa/opencode-logo-pulse.git
@@ -38,13 +40,13 @@ bun run typecheck
 bun run deploy
 ```
 
-`bun run deploy` copies the plugin and WAV assets to:
+`bun run deploy` 会把插件和 WAV 资源复制到：
 
 ```text
 ~/.config/opencode/plugins/logo-pulse
 ```
 
-Add the plugin to `~/.config/opencode/tui.json`:
+然后把插件加入 `~/.config/opencode/tui.json`：
 
 ```json
 {
@@ -64,21 +66,21 @@ Add the plugin to `~/.config/opencode/tui.json`:
 }
 ```
 
-Existing TUI settings can remain alongside `plugin`. Restart OpenCode after deploying or changing `tui.json`.
+已有的 TUI 设置可以与 `plugin` 并存。部署或修改 `tui.json` 后重启 OpenCode。
 
-## Configuration
+## 配置
 
-All options are optional.
+所有选项都是可选的。
 
-| Option | Type | Default | Accepted values | Effect |
+| 选项 | 类型 | 默认 | 取值 | 效果 |
 |---|---|---:|---|---|
-| `sound` | boolean | `false` | `true`, `false` | Enables the charge hum and alternating pulse sounds. |
-| `volume` | number | `0.3` | `0` to `1` | Master level before the quieter per-effect gain is applied. Values are clamped. |
-| `charge_ms` | number | `3000` | `91` to `30000` | Milliseconds required for an automatic full-charge burst. Values are rounded and clamped. |
-| `idle` | boolean | `false` | `true`, `false` | Enables a slow, low-amplitude shimmer while the logo is otherwise idle. |
-| `enhanced` | boolean | `true` | `true`, `false` | Uses the multi-stage primary/secondary/white energy ramp. Disable for the simpler legacy ramp. |
+| `sound` | boolean | `false` | `true`、`false` | 启用蓄力低鸣与交替的脉冲音效。 |
+| `volume` | number | `0.3` | `0` 到 `1` | 各效果独立增益之前的总音量，越界会被钳制。 |
+| `charge_ms` | number | `3000` | `91` 到 `30000` | 自动满蓄爆发所需的毫秒数，取整并钳制。 |
+| `idle` | boolean | `false` | `true`、`false` | logo 闲置时启用缓慢、低幅度的微光。 |
+| `enhanced` | boolean | `true` | `true`、`false` | 使用多段 primary/secondary/white 能量渐变；关闭则回到简单的旧版渐变。 |
 
-Minimal configuration, using every default:
+最小配置（全部使用默认值）：
 
 ```json
 {
@@ -86,7 +88,7 @@ Minimal configuration, using every default:
 }
 ```
 
-Enable sound explicitly:
+显式开启声音：
 
 ```json
 {
@@ -96,19 +98,19 @@ Enable sound explicitly:
 }
 ```
 
-## Sound behavior
+## 声音行为
 
-The plugin chooses the first available player from its platform fallback list and owns every process it starts. Charge audio loops for charges longer than the WAV asset, while release, drag-out, focus loss, plugin deactivation, and OpenCode shutdown terminate the owned hum.
+插件从平台回退列表中选择第一个可用的播放器，并接管它启动的每个进程。蓄力时间超过 WAV 资源长度时低鸣会循环；松手、拖出、焦点丢失、插件停用和 OpenCode 退出都会终止这个低鸣进程。
 
-If sound is enabled but inaudible:
+如果开了声音却听不到：
 
-1. Check that a supported player is installed, for example `ffplay -version`.
-2. Confirm `sound` is `true` and `volume` is greater than `0`.
-3. Restart OpenCode after changing `tui.json`.
+1. 确认装了一个受支持的播放器，例如 `ffplay -version`。
+2. 确认 `sound` 为 `true` 且 `volume` 大于 `0`。
+3. 修改 `tui.json` 后重启 OpenCode。
 
-The visual interaction works normally when no player is available.
+没有可用播放器时，视觉交互不受影响。
 
-## Development
+## 开发
 
 ```bash
 bun run test
@@ -116,17 +118,17 @@ bun run typecheck
 bun run deploy
 ```
 
-- `bun run test` exercises static fidelity, theme repainting, charge/release, pointer escape, automatic burst, button filtering, idle motion, legacy gradients, and combo behavior.
-- `bun run typecheck` checks plugin and harness TypeScript without emitting files.
-- `bun run deploy` refreshes the global OpenCode plugin copy.
+- `bun run test` 覆盖静态保真、主题重绘、蓄力/释放、指针逃逸、自动爆发、按键过滤、闲置动效、旧版渐变与连击行为。
+- `bun run typecheck` 检查插件与测试脚手架的 TypeScript，不产出文件。
+- `bun run deploy` 刷新全局 OpenCode 插件副本。
 
-Run OpenCode without external TUI plugins when comparing against the native home screen:
+与原生主页对比时，用不带外部 TUI 插件的方式启动 OpenCode：
 
 ```bash
 opencode --pure
 ```
 
-## Update
+## 更新
 
 ```bash
 git pull --ff-only
@@ -135,16 +137,16 @@ bun run typecheck
 bun run deploy
 ```
 
-Restart OpenCode to load the updated files.
+重启 OpenCode 加载新文件。
 
-## Uninstall
+## 卸载
 
-1. Remove `./plugins/logo-pulse/index.tsx` from the `plugin` array in `~/.config/opencode/tui.json`.
-2. Optionally delete `~/.config/opencode/plugins/logo-pulse`.
-3. Restart OpenCode.
+1. 从 `~/.config/opencode/tui.json` 的 `plugin` 数组中移除 `./plugins/logo-pulse/index.tsx`。
+2. 可选：删除 `~/.config/opencode/plugins/logo-pulse`。
+3. 重启 OpenCode。
 
-OpenCode will return to its native static home logo.
+OpenCode 会回到原生的静态主页 logo。
 
-## License
+## 许可
 
 [MIT](LICENSE) © 2026 WhiteGiverMa
