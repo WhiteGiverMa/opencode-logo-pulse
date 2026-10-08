@@ -831,7 +831,7 @@ const tui: TuiPlugin = async (api, options) => {
 }
 
 const plugin: TuiPluginModule & { id: string } = {
-  id: "local.logo-pulse",
+  id: "o3p.terminal.logo-pulse",
   tui,
 }
 
